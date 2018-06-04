@@ -1,1 +1,1 @@
-test 2
+git config --global http.proxy https://192.168.77.100:8080
