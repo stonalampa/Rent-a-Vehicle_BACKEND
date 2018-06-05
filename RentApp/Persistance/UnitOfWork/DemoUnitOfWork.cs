@@ -5,17 +5,27 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using Unity.Attributes;
+using RentApp.Models.Entities;
 
 namespace RentApp.Persistance.UnitOfWork
 {
-    public class DemoUnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly DbContext _context;
       
         [Dependency]
         public IServiceRepository Services { get; set; }
+        [Dependency]
+        public IRepository<AppUser, int> Users { get; set; }
+        [Dependency]
+        public IRepository<BranchOffice, int> BranchOffices { get; set; }
+        [Dependency]
+        public IRepository<Vehicle, int> Vehicles { get; set; }
+        [Dependency]
+        public IRepository<Rating, int> Ratings { get; set; }
 
-        public DemoUnitOfWork(DbContext context)
+
+        public UnitOfWork(DbContext context)
         {
             _context = context;
         }
