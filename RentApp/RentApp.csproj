@@ -282,7 +282,14 @@
     <Compile Include="Models\Entities\Rating.cs" />
     <Compile Include="Models\Entities\Service.cs" />
     <Compile Include="Models\Entities\Vehicle.cs" />
+    <Compile Include="Persistance\DemoContext.cs" />
     <Compile Include="Persistance\RADBContext.cs" />
+    <Compile Include="Persistance\Repository\IRepository.cs" />
+    <Compile Include="Persistance\Repository\IServiceRepository.cs" />
+    <Compile Include="Persistance\Repository\Repository.cs" />
+    <Compile Include="Persistance\Repository\ServiceRepository.cs" />
+    <Compile Include="Persistance\UnitOfWork\DemoUnitOfWork.cs" />
+    <Compile Include="Persistance\UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Providers\CustomJwtFormat.cs" />
