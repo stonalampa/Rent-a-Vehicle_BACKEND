@@ -13,7 +13,8 @@ namespace RentApp.Models.Entities
         [Key]
         public int Id { get; set; }
         public string FullName { get; set; }
-        public DateTime dateOfBirth { get; set; }
+        
+        public Nullable<DateTime> dateOfBirth { get; set; }
         public string PhotoPath { get; set; }
         public UserType Type { get; set; }
         

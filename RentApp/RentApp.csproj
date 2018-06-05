@@ -272,17 +272,23 @@
     <Compile Include="Migrations\201806031439020_Initial.Designer.cs">
       <DependentUpon>201806031439020_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806050935147_Migration1.cs" />
+    <Compile Include="Migrations\201806050935147_Migration1.Designer.cs">
+      <DependentUpon>201806050935147_Migration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806050944227_Migration2.cs" />
+    <Compile Include="Migrations\201806050944227_Migration2.Designer.cs">
+      <DependentUpon>201806050944227_Migration2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\BranchOffice.cs" />
-    <Compile Include="Models\Entities\Office.cs" />
     <Compile Include="Models\Entities\RAIdentityUser.cs" />
     <Compile Include="Models\Entities\AppUser.cs" />
     <Compile Include="Models\Entities\Rating.cs" />
     <Compile Include="Models\Entities\Service.cs" />
     <Compile Include="Models\Entities\Vehicle.cs" />
-    <Compile Include="Persistance\DemoContext.cs" />
     <Compile Include="Persistance\RADBContext.cs" />
     <Compile Include="Persistance\Repository\IRepository.cs" />
     <Compile Include="Persistance\Repository\IServiceRepository.cs" />
@@ -373,6 +379,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201806031439020_Initial.resx">
       <DependentUpon>201806031439020_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806050935147_Migration1.resx">
+      <DependentUpon>201806050935147_Migration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806050944227_Migration2.resx">
+      <DependentUpon>201806050944227_Migration2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
