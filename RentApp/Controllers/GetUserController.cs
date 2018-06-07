@@ -3,14 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http.Description;
 using System.Web.Mvc;
+using System.Web.Http;
+using System.Web.Http.Results;
+
+
 
 namespace RentApp.Controllers
 {
-    public class GetUserController : Controller
+    [System.Web.Http.RoutePrefix("Read")]
+    public class GetUserController : ApiController
     {
-        [HttpGet]
-        public ActionResult ReturnUser()
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("ReadUser")]
+        [ResponseType(typeof(AppUser))]
+        public IHttpActionResult ReturnUser()
         {
             AppUser testUser = new AppUser();
             testUser.Id = 1;
@@ -19,9 +27,14 @@ namespace RentApp.Controllers
             testUser.FullName = "Stojan Stojanovic";
             testUser.dateOfBirth = DateTime.Now;
 
-            return View();
+            if (testUser == null)
+            {
+
+                return NotFound();
+            }
+            return Ok(testUser);
         }
 
-        
+
     }
 }
