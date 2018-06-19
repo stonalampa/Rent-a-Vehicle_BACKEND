@@ -6,7 +6,9 @@ namespace RentApp.Migrations
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Data.Entity.Validation;
     using System.Linq;
+    using System.Text;
 
     internal sealed class Configuration : DbMigrationsConfiguration<RentApp.Persistance.RADBContext>
     {
@@ -56,6 +58,7 @@ namespace RentApp.Migrations
                 manager.Create(role);
             }
 
+
             context.AppUsers.AddOrUpdate(
 
                   u => u.FullName,
@@ -72,7 +75,13 @@ namespace RentApp.Migrations
 
             );
 
+            context.AppUsers.AddOrUpdate(
+               p => p.FullName,
+               new AppUser() { FullName = "mico mico" }
+           );
             context.SaveChanges();
+
+      
 
             var userStore = new UserStore<RAIdentityUser>(context);
             var userManager = new UserManager<RAIdentityUser>(userStore);
@@ -94,6 +103,40 @@ namespace RentApp.Migrations
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
 
+            }
+
+            if (!context.Users.Any(u => u.UserName == "mico"))
+            {
+                var _appUser = context.AppUsers.FirstOrDefault(a => a.FullName == "mico mico");
+                var user = new RAIdentityUser() { Id = "mico", UserName = "mico", Email = "mico@yahoo.com", PasswordHash = RAIdentityUser.HashPassword("mico"), AppUserId = _appUser.Id };
+                userManager.Create(user);
+                userManager.AddToRole(user.Id, "Manager");
+            }
+          
+
+        }
+        private static void SaveChanges(DbContext context)
+        {
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var sb = new StringBuilder();
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+                throw new DbEntityValidationException(
+                    "Entity Validation Failed - errors follow:\n" +
+                    sb.ToString(), ex
+                );
             }
         }
     }

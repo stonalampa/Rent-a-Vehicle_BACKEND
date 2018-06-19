@@ -10,7 +10,7 @@ namespace RentApp.Persistance.Repository
     {
         protected readonly DbContext context;
 
-        public Repository(DbContext context)
+        public Repository(DbContext context) //isto kao dependency injection
         {
             this.context = context;
         }

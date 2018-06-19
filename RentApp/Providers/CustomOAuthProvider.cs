@@ -5,6 +5,7 @@ using Microsoft.Owin.Security.DataHandler.Encoder;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using RentApp.Models.Entities;
+using RentApp.Persistance;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -39,6 +40,29 @@ namespace RentApp.Providers
                 context.SetError("invalid_grant", "The user name or password is incorrect.!!!!");
                 return;
             }
+            RADBContext db = new RADBContext();
+
+            var userRole = user.Roles.FirstOrDefault();
+            var role = db.Roles.SingleOrDefault(r => r.Id == userRole.RoleId);
+            var roleName = role?.Name;
+
+            if (roleName == "Admin")
+            {
+                context.OwinContext.Response.Headers.Add("Role", new[] { "Admin" });
+            }
+            else if (roleName == "Manager")
+            {
+                context.OwinContext.Response.Headers.Add("Role", new[] { "Manager" });
+            }
+            else
+            {
+                context.OwinContext.Response.Headers.Add("Role", new[] { "User" });
+            }
+
+            //Mora se dodati u header response-a kako bi se se Role atribut
+            //mogao procitati na klijentskoj strani
+            context.OwinContext.Response.Headers.Add("Access-Control-Expose-Headers", new[] { "Role" });
+
 
             //if (!user.EmailConfirmed)
             //{

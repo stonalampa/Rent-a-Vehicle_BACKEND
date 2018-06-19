@@ -7,7 +7,7 @@ using System.Web;
 
 namespace RentApp.Persistance.Repository
 {
-    public class ServiceRepository : Repository<Service, int>, IServiceRepository
+    public class ServiceRepository : Repository<Service, int>, IServiceRepository //tip servis kljuc integer
     {
         public ServiceRepository(DbContext context) : base(context)
         {
@@ -15,9 +15,9 @@ namespace RentApp.Persistance.Repository
 
         public IEnumerable<Service> GetAll(int pageIndex, int pageSize)
         {
-            return RADBContext.Services.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            return DemoContext.Services.Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
 
-        protected RADBContext RADBContext { get { return context as RADBContext; } }
+        protected RADBContext DemoContext { get { return context as RADBContext; } }
     }
 }

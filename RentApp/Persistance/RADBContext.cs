@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.EntityFramework;
 using RentApp.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,13 +10,12 @@ namespace RentApp.Persistance
 {
     public class RADBContext : IdentityDbContext<RAIdentityUser>
     {
-        public DbSet<AppUser> AppUsers { get; set; }
-        public DbSet<Service> Services { get; set; }
-        public DbSet<BranchOffice> BranchOffices { get; set; }
-        public DbSet<Rating> Ratings { get; set; }
-        public DbSet<Vehicle> Vehicles{ get; set; }
-
-
+        public virtual DbSet<AppUser> AppUsers { get; set; }
+        public virtual DbSet<Service> Services { get; set; }
+        public virtual DbSet<Branch> Branches { get; set; }
+        public virtual DbSet<Rent> Rents { get; set; }
+        public virtual DbSet<TypeOfVehicle> Types { get; set; }
+        public virtual DbSet<Vehicle> Vehicles { get; set; }
         public RADBContext() : base("name=RADB")
         {
         }

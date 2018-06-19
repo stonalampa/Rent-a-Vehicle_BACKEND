@@ -15,16 +15,19 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using RentApp.Models;
 using RentApp.Models.Entities;
+using RentApp.Persistance;
 using RentApp.Providers;
 using RentApp.Results;
 
 namespace RentApp.Controllers
 {
     [Authorize]
-    [RoutePrefix("api/Account")]
+    [RoutePrefix("Account")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
+        private ApplicationUserManager _userManager;
+        private RADBContext db = new RADBContext();
 
         public AccountController()
         {
@@ -37,7 +40,17 @@ namespace RentApp.Controllers
             AccessTokenFormat = accessTokenFormat;
         }
 
-        public ApplicationUserManager UserManager { get; private set; }
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
@@ -318,14 +331,24 @@ namespace RentApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new RAIdentityUser() { UserName = model.Email, Email = model.Email };
+            var appUser = new AppUser();
+            appUser.Username = model.Username;
+            appUser.Role = model.Role;
+            appUser.Birthday = model.Birthday;
+            db.AppUsers.Add(appUser);
+            db.SaveChanges();
+
+            var user = new RAIdentityUser(appUser.Id, model.Username, model.Email);
+            user.PasswordHash = RAIdentityUser.HashPassword(model.Password);
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            UserManager.AddToRole(user.Id, model.Role);
 
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
+       
 
             return Ok();
         }

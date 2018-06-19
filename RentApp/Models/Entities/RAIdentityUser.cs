@@ -18,6 +18,19 @@ namespace RentApp.Models.Entities
         public int AppUserId { get; set; }
         public AppUser AppUser { get; set; }
 
+        public RAIdentityUser()
+        {
+
+        }
+
+        public RAIdentityUser(int appUserId, string username, string email)
+        {
+            this.AppUserId = appUserId;
+            this.UserName = username;
+            this.Email = email;
+            
+        }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<RAIdentityUser> manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

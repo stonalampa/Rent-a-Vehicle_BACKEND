@@ -9,6 +9,6 @@ namespace RentApp.Persistance.Repository
 {
     public interface IServiceRepository : IRepository<Service, int>
     {
-        IEnumerable<Service> GetAll(int pageIndex, int pageSize);
+        IEnumerable<Service> GetAll(int pageIndex, int pageSize); //pokupi mi samo onoliko koliko ja kazem
     }
 }

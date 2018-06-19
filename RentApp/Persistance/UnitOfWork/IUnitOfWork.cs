@@ -1,5 +1,4 @@
-﻿using RentApp.Models.Entities;
-using RentApp.Persistance.Repository;
+﻿using RentApp.Persistance.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace RentApp.Persistance.UnitOfWork
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork:IDisposable
     {
-        IRepository<AppUser, int> Users { get; set; }
-        IServiceRepository Services { get; set; }
-        IRepository<BranchOffice, int> BranchOffices { get; set; }
-        IRepository<Vehicle, int> Vehicles { get; set; }
-        IRepository<Rating, int> Ratings { get; set; }
-
+        IServiceRepository Services { get; set; } //u sebi ima sve servise, moze da radi sta hoce sa servisima, prosiriti sa ostalim entitetima
+        //dodala sam
+        IAppUserRepository AppUsers { get; set; }
+        IBranchRepository Branches { get; set; }
+        IRentRepository Rents { get; set; }
+        ITypeOfVehicleRepository Types { get; set; }
+        IVehicleRepository Vehicles { get; set; }
+        //kraj
         int Complete();
     }
 }
